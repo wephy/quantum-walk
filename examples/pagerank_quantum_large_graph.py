@@ -7,9 +7,9 @@ against the regular Google PageRank solution.
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# import quantum walk code
+# Import quantum walk code
 import importer  # noqa # pylint: disable=unused-import
-import quantum_walk as qw  # noqa # pylint: disable=import-error
+from quantum_walk import pagerank  # noqa # pylint: disable=import-error
 
 
 def plot(classical_solution, quantum_solution):
@@ -28,7 +28,7 @@ def plot(classical_solution, quantum_solution):
 def main():
     """Run example."""
     graph = nx.erdos_renyi_graph(100, 0.1, directed=True)
-    quantum_pagerank = qw.QuantumPageRank(graph)
+    quantum_pagerank = pagerank.QuantumPageRank(graph)
     classical_solution = quantum_pagerank.classical_solution()
     quantum_solution = quantum_pagerank.quantum_solution()
     plot(classical_solution, quantum_solution)

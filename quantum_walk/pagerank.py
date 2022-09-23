@@ -8,7 +8,7 @@ involves a quantum walker on the graph.
 import numpy as np
 import networkx as nx
 from . import quantum_bits as qb
-from . import dtqw
+from . import discrete_time_quantum_walk as dtqw
 
 
 class PageRank:

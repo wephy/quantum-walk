@@ -6,8 +6,10 @@ walk along the graph), comparing their results at different stages.
 
 import networkx as nx
 import matplotlib.pyplot as plt
+
+# Import quantum walk code
 import importer  # noqa # pylint: disable=unused-import
-import quantum_walk as qw  # noqa # pylint: disable=import-error
+from quantum_walk import pagerank  # noqa # pylint: disable=import-error
 
 
 def plot(q_results, c_results, plot_points):
@@ -38,6 +40,7 @@ def main():
     """
     plot_points = [1, 10, 100, 1000, 10000]
 
+    # Construct graph
     graph = nx.DiGraph()
     graph.add_edges_from([
         (0, 1), (0, 2), (0, 3), (0, 5), (1, 0), (1, 2),
@@ -45,8 +48,9 @@ def main():
         (5, 2), (6, 4), (7, 1), (7, 2), (7, 6)
         ])
 
-    classical_pagerank = qw.ClassicalPageRank(graph)
-    quantum_pagerank = qw.QuantumPageRank(graph)
+    # Create PageRank objects
+    classical_pagerank = pagerank.ClassicalPageRank(graph)
+    quantum_pagerank = pagerank.QuantumPageRank(graph)
     classical_results = []
     quantum_results = []
     for i in range(1, plot_points[-1] + 1):

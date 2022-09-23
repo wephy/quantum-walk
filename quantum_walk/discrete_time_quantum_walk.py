@@ -6,7 +6,7 @@ case, and also for a directed graph.
 from . import quantum_bits as qb
 
 
-def one_dimnesion(qubits, decoherence=False):
+def one_dimension(qubits, decoherence=False):
     """Performs a discrete time step in the discrete-time quantum walk"""
     # perform coin flips
     qubits.coin_flip()
