@@ -8,8 +8,10 @@ with quantum bits, to further be used in quantum algorithms.
 import numpy as np
 
 
-def hadamard(qubit):
+def hadamard(qubit: list):
     """Perform the Hadamard gate on a single qubit.
+
+    The qubit is a list containing two complex numbers.
 
     The hadamard gate rotates the quantum state of the qubit by 90 degrees around
     the y-axis and then 180 degrees around the x-axis when pictured on a Bloch
@@ -26,20 +28,25 @@ def hadamard(qubit):
     return transformed_qubit
 
 
-def construct_qubits(keys):
+def construct_qubits(positions: list):
     """Create a one-dimension cartesian lattice of qubits.
 
-    Each qubit is represented with 2 complex numbers, as they are not
-    restriced to the surface of the Bloch sphere.
+    Each qubit is represented with 2 complex numbers. The first complex number
+    represents how much of it is in a state of 'up', and similarly the second for
+    the 'down' state.
+
+    For those curious as to why we do need two complex numbers for this, these
+    qubits are not confined to the surface of the Bloch sphere (they can be
+    inside, also), and thus do not lose any degrees of freedom.
 
     """
-    return {i: [complex(), complex()] for i in keys}
+    return {i: [complex(), complex()] for i in positions}
 
 
 class Qubits:
-    """A base class for qubits."""
+    """Base class for qubits."""
 
-    def __init__(self, states):
+    def __init__(self, states: dict):
         """Initialise attributes."""
         self.states = states
         self.number_of_qubits = len(states.keys())
@@ -63,8 +70,8 @@ class Qubits:
 
 
 class OneDimensionQubits(Qubits):
-    """"""
-    def __init__(self, start, stop):
+    """A collection of qubits on a one-dimensional cartesian lattice."""
+    def __init__(self, start: int, stop: int):
         self.start = start
         self.stop = stop
         self.states = construct_qubits(range(start, stop + 1))
@@ -72,7 +79,7 @@ class OneDimensionQubits(Qubits):
 
 
 class GraphQubits(Qubits):
-    """"""
+    """A collection of qubits on a graph."""
     def __init__(self, graph):
         self.graph = graph
         self.states = construct_qubits(graph.nodes)
