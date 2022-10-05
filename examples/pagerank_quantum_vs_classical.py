@@ -28,6 +28,8 @@ def plot(q_results, c_results, plot_points):
     for i, result in enumerate(q_results):
         axs[i].bar(*zip(*result.items()))
         axs[i].set_title(f"{plot_points[i]} steps")
+
+    # Show fig
     plt.show()
 
 
@@ -43,14 +45,14 @@ def main():
     # Construct graph
     graph = nx.DiGraph()
     graph.add_edges_from([
-        (0, 1), (0, 2), (0, 3), (0, 5), (1, 0), (1, 2),
-        (1, 3), (2, 1), (2, 6), (3, 5), (4, 1), (4, 5),
-        (5, 2), (6, 4), (7, 1), (7, 2), (7, 6)
+        (0, 1), (0, 2), (0, 3), (0, 5), (1, 0), (1, 2), (1, 3), (2, 1), (2, 6),
+        (3, 5), (4, 1), (4, 5), (5, 2), (6, 4), (7, 1), (7, 2), (7, 6)
         ])
 
     # Create PageRank objects
     classical_pagerank = pagerank.ClassicalPageRank(graph)
     quantum_pagerank = pagerank.QuantumPageRank(graph)
+
     classical_results = []
     quantum_results = []
     for i in range(1, plot_points[-1] + 1):
@@ -59,7 +61,6 @@ def main():
         if i in plot_points:
             classical_results.append(classical_pagerank.result())
             quantum_results.append(quantum_pagerank.result())
-
     plot(quantum_results, classical_results, plot_points)
 
 
