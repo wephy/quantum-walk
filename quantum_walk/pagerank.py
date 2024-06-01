@@ -13,7 +13,7 @@ from . import discrete_time_quantum_walk as dtqw
 
 class PageRank:
     """Base class for PageRank."""
-    
+
     def __init__(self, graph):
         """Initialise attributes."""
         self.graph = graph
@@ -28,7 +28,7 @@ class PageRank:
 
 class QuantumPageRank(PageRank):
     """An algorithm for QuantumPageRank."""
-    
+
     def __init__(self, graph):
         """Initialise attributes."""
         self.graph = graph
@@ -61,22 +61,23 @@ class QuantumPageRank(PageRank):
 
 class ClassicalPageRank(PageRank):
     """An algorithm for standard PageRank using Monte Carlo method."""
-    
+
     def __init__(self, graph, alpha=0.85):
         """Initialise attributes."""
         self.graph = graph
         self.alpha = alpha
         self.counts = {vertex: 0 for vertex in self.graph}
-        self.successors = {vertex: list(self.graph.successors(vertex))
-                           for vertex in self.graph}
-        self.current_vertex = np.random.choice(self.vertices)
+        self.successors = {
+            vertex: list(self.graph.successors(vertex)) for vertex in self.graph
+        }
+        self.current_vertex = np.random.choice(self.graph)
         PageRank.__init__(self, graph)
 
     def step(self):
         """Take a step on the graph."""
         successors = self.successors[self.current_vertex]
         if len(successors) == 0 or np.random.random() > self.alpha:
-            self.current_vertex = np.random.choice(self.vertices)
+            self.current_vertex = np.random.choice(self.graph)
         else:
             self.current_vertex = np.random.choice(successors)
         self.counts[self.current_vertex] += 1
